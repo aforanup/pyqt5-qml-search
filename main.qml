@@ -142,16 +142,22 @@ ApplicationWindow{
         }
 
         Text{
+            id: submitText
             text:"Submit"
             color: "white"
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
         }
-        // MouseArea{
-        //     onClick:{
-
-        //     }
-        // }
+        MouseArea{
+            anchors.fill: parent
+            onClicked:{
+                console.log(inputText1.text)
+            }
+            onEntered: {
+                submitText.color="grey"
+            }
+            onExited: {submitText.color= "white"}
+        }
     }
 
 }
