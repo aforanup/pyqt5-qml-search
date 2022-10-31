@@ -35,17 +35,19 @@ ApplicationWindow{
         anchors.top: parent.top
         anchors.topMargin: 3
         color: "#F6F8F9"
-        TextInput {
+        TextField {
             // height: 28
             id: inputText
+            height: parent.height
+            width: parent.width
             
-            color:"#B3B3B3"
-            text: "enter directory"
+            color:"#5D5D5D"
+            placeholderText: "enter directory"
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: 2
-                rightMargin: 2
+                // leftMargin: 2
+                // rightMargin: 2
             }
             
             font.pixelSize: 12
@@ -104,17 +106,19 @@ ApplicationWindow{
         anchors.rightMargin: 5
         anchors.leftMargin: 5
         color: "#F6F8F9"
-        TextInput {
+        TextField {
             // height: 28
             id: inputText1
+            height: parent.height
+            width: parent.width
             
-            color:"#B3B3B3"
-            text: "enter phrase"
+            color:"#5D5D5D"
+            placeholderText:"enter phrase"
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: 2
-                rightMargin: 2
+                // leftMargin: 2
+                // rightMargin: 2
             }
             
             font.pixelSize: 12
@@ -133,17 +137,21 @@ ApplicationWindow{
         anchors{
             top: directoryRect1.bottom
             left: parent.left
+            topMargin: 3
+            right: directoryRect1.right
         }
 
         Text{
             text:"Submit"
             color: "white"
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
         }
-        MouseArea{
-            onClick:{
+        // MouseArea{
+        //     onClick:{
 
-            }
-        }
+        //     }
+        // }
     }
 
 }
