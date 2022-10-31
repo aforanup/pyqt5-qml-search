@@ -126,7 +126,24 @@ ApplicationWindow{
 
     // FOR BUTTON
     Rectangle{
-        
+
+        color: "#52743D"
+        height:30
+        width: 75
+        anchors{
+            top: directoryRect1.bottom
+            left: parent.left
+        }
+
+        Text{
+            text:"Submit"
+            color: "white"
+        }
+        MouseArea{
+            onClick:{
+
+            }
+        }
     }
 
 }
