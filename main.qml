@@ -8,7 +8,8 @@ ApplicationWindow{
     color: "#252525"
 
     property QtObject backend
-    property string file_list: "heyy"
+    property string file_list: ""
+
 
     Connections {
         id:connectId
@@ -167,9 +168,10 @@ ApplicationWindow{
         MouseArea{
             anchors.fill: parent
             onClicked:{
-                console.log(inputText1.text)
+                // console.log(inputText1.text)
                 // connectId.onDirPath(inputText1.text)
-                backend.findPhrase(inputText1.text)
+                // backend.findPhrase(inputText1.text)
+                backend.path_and_phrase(inputText.text, inputText1.text)
             }
             // onEntered: {
             //     submitText.color="grey"

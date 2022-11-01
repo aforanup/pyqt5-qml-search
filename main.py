@@ -12,6 +12,7 @@
 
 import sys
 import os
+import json
 
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtQml import QQmlApplicationEngine
@@ -25,36 +26,51 @@ class Backend(QObject):
 
     def __init__(self):
         super().__init__()
+
         # self.find_phrase()
         # self.path = input("enter folder path")
         # self.phrase = input("enter phrase to search")
-        # os.chdir(self.path)
 
     def read_python_file(self, file_path):
+        print(file_path, "here")
+
         with open(file_path, "r") as f:
             content = f.read()
+            # print(content, self.phrase, "popopopo")
             if self.phrase in content:
-                print(file_path)
-                file_name = self.filepath.split("\\")[-1]
-                self.file_list = []
+                # print(file_path)
+                file_name = self.file_path.split("\\")[-1]
+
                 self.file_list.append(file_name)
 
-    @pyqtSlot(str)
-    def findPhrase(self, body="abc"):
-        print(body)
-        # for file in os.listdir():
-        #     if file.endswith(".py"):
-        #         file_path = f"{self.path}\{file}"
-        #         self.read_python_file(file_path)
-        # print(self.file_list)
-        # if self.file_list:
-        #     self.dirPath.emit(self.file_list)
+    # @pyqtSlot(str)
+    def findPhrase(self):
+        # print(body)
+        self.file_list = []
+        for file in os.listdir():
+            if file.endswith(".py"):
+                # file_path = f"{self.file_path}\\{file}"
+                # self.read_python_file(file_path)
+                self.read_python_file(file)
+        print(self.file_list)
+        if self.file_list:
+            information = json.dumps(self.file_list)
+            self.dirPath.emit(information)
+            # self.dirPath.emit(self.file_list)
         # print("helloo world")
-        self.dirPath.emit("hey "+body)
+        # self.dirPath.emit("hey "+body)
+
+    @pyqtSlot(str, str)
+    def path_and_phrase(self, path, phrase):
+        self.file_path = path
+        self.phrase = phrase
+        print(path, phrase)
+        os.chdir(self.file_path)
+        self.findPhrase()
 
 
 backend = Backend()
-backend.findPhrase("lalala")
+# backend.findPhrase("lalala")
 
 app = QGuiApplication(sys.argv)
 
