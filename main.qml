@@ -7,6 +7,22 @@ ApplicationWindow{
     width: 600
     color: "#252525"
 
+    property QtObject backend
+    property string file_list: "heyy"
+
+    Connections {
+        id:connectId
+        target: backend
+        
+        function onDirPath(msg){
+            file_list=msg;
+            return
+        }
+
+        // function on file
+
+    }
+
     Rectangle{
         height: 28
         id: directoryRect
@@ -51,7 +67,7 @@ ApplicationWindow{
             }
             
             font.pixelSize: 12
-            cursorVisible: true
+            cursorVisible: false
             anchors.verticalCenter: parent.verticalCenter
 
             // mouse area for changing color and clearing the input area
@@ -122,7 +138,7 @@ ApplicationWindow{
             }
             
             font.pixelSize: 12
-            cursorVisible: true
+            cursorVisible: false
             anchors.verticalCenter: parent.verticalCenter
         }
     }
@@ -152,12 +168,28 @@ ApplicationWindow{
             anchors.fill: parent
             onClicked:{
                 console.log(inputText1.text)
+                // connectId.onDirPath(inputText1.text)
+                backend.findPhrase(inputText1.text)
             }
-            onEntered: {
-                submitText.color="grey"
-            }
-            onExited: {submitText.color= "white"}
+            // onEntered: {
+            //     submitText.color="grey"
+            // }
+            // onExited: {submitText.color= "white"}
         }
     }
 
+    Rectangle{
+        anchors{
+            top: inputRect1.bottom
+            bottom: parent.bottom
+            left: inputRect1.left
+            right: inputRect1.right
+            topMargin: 3
+        }
+        Text{
+            text: file_list
+            font.pixelSize: 18
+            color: "black"
+        }
+    }
 }
