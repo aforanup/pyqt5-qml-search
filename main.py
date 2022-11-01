@@ -26,33 +26,43 @@ class Backend(QObject):
 
     def __init__(self):
         super().__init__()
-
+        # self.file_list = []
         # self.find_phrase()
         # self.path = input("enter folder path")
         # self.phrase = input("enter phrase to search")
 
     def read_python_file(self, file_path):
-        print(file_path, "here")
+        # print(file_path, "here")
 
         with open(file_path, "r") as f:
             content = f.read()
             # print(content, self.phrase, "popopopo")
             if self.phrase in content:
-                # print(file_path)
-                file_name = self.file_path.split("\\")[-1]
-
+                print(file_path)
+                if "\\" in file_path:
+                    file_name = file_path.split("\\")[-1]
+                else:
+                    file_name = file_path
+                # print(file_name)
+                # # file_list = []
+                # file_list.append(file_name)
+                # b = file_list
+                # print(file_name, b, "here")
                 self.file_list.append(file_name)
 
     # @pyqtSlot(str)
     def findPhrase(self):
-        # print(body)
         self.file_list = []
+        # print(body)
+
         for file in os.listdir():
             if file.endswith(".py"):
-                # file_path = f"{self.file_path}\\{file}"
-                # self.read_python_file(file_path)
-                self.read_python_file(file)
-        print(self.file_list)
+                if self.file_path:
+                    file_path = f"{self.file_path}\\{file}"
+                    self.read_python_file(file_path)
+                else:
+                    self.read_python_file(file)
+        # print(self.file_list)
         if self.file_list:
             information = json.dumps(self.file_list)
             self.dirPath.emit(information)
@@ -64,8 +74,8 @@ class Backend(QObject):
     def path_and_phrase(self, path, phrase):
         self.file_path = path
         self.phrase = phrase
-        print(path, phrase)
-        os.chdir(self.file_path)
+        # print(path, phrase)
+        # os.chdir(self.file_path)
         self.findPhrase()
 
 
