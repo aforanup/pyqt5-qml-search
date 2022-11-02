@@ -10,6 +10,7 @@
 # view.show()
 # app.exec_()
 
+from ast import arguments
 import sys
 import os
 import json
@@ -23,6 +24,7 @@ class Backend(QObject):
 
     dirPath = pyqtSignal(str, arguments=["dir_path"])
     phraseName = pyqtSignal(str, arguments=["phrase_name"])
+    listObject = pyqtSignal(list, arguments=["list"])
 
     def __init__(self):
         super().__init__()
@@ -35,20 +37,32 @@ class Backend(QObject):
         # print(file_path, "here")
 
         with open(file_path, "r") as f:
-            content = f.read()
+            # content = f.read()
+            lines = f.readlines()
+            if "\\" in file_path:
+                file_name = file_path.split("\\")[-1]
+            else:
+                file_name = file_path
+
+            for line in lines:
+                if self.phrase in line:
+                    file_name = file_name + f" in line {lines.index(line)+1}"
+                    self.file_list.append(file_name)
+                    break
+
             # print(content, self.phrase, "popopopo")
-            if self.phrase in content:
-                print(file_path)
-                if "\\" in file_path:
-                    file_name = file_path.split("\\")[-1]
-                else:
-                    file_name = file_path
-                # print(file_name)
-                # # file_list = []
-                # file_list.append(file_name)
-                # b = file_list
-                # print(file_name, b, "here")
-                self.file_list.append(file_name)
+            # if self.phrase in content:
+            #     print(file_path)
+            #     if "\\" in file_path:
+            #         file_name = file_path.split("\\")[-1]
+            #     else:
+            #         file_name = file_path
+            #     # print(file_name)
+            #     # # file_list = []
+            #     # file_list.append(file_name)
+            #     # b = file_list
+            #     # print(file_name, b, "here")
+            #     self.file_list.append(file_name)
 
     # @pyqtSlot(str)
     def findPhrase(self):
@@ -66,6 +80,7 @@ class Backend(QObject):
         if self.file_list:
             information = json.dumps(self.file_list)
             self.dirPath.emit(information)
+            self.listObject.emit(self.file_list)
             # self.dirPath.emit(self.file_list)
         # print("helloo world")
         # self.dirPath.emit("hey "+body)

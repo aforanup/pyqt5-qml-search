@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.3
 
 ApplicationWindow{
     visible: true
@@ -9,7 +10,8 @@ ApplicationWindow{
 
     property QtObject backend
     property string file_list: ""
-
+    property var list_objects: []
+    property var dict_objects:{}
 
     Connections {
         id:connectId
@@ -17,12 +19,24 @@ ApplicationWindow{
         
         function onDirPath(msg){
             file_list=msg;
-            return
+            // return
+        }
+        function onListObject(obj){
+            console.log(typeof obj)
+            for (var i = 0; i < obj.length; i++){
+                console.log(obj[i])
+            }
+            list_objects= obj;
+            // Text{
+            //     text:hello
+            // }
         }
 
         // function on file
 
     }
+
+    // function allObjects()
 
     Rectangle{
         height: 28
@@ -60,6 +74,9 @@ ApplicationWindow{
             
             color:"#5D5D5D"
             placeholderText: "enter directory"
+            selectByMouse: true
+            selectedTextColor: "#ffffff"
+            selectionColor: "#ff007f"
             anchors {
                 left: parent.left
                 right: parent.right
@@ -123,6 +140,16 @@ ApplicationWindow{
         anchors.rightMargin: 5
         anchors.leftMargin: 5
         color: "#F6F8F9"
+
+        // MouseArea{
+        //     onClicked:{
+        //         console.log("single clicked")
+        //     }
+        //     onDoubleClicked: {
+        //         console.log("doubled")
+        //         inputText1.selectAll()
+        //     }
+        // }
         TextField {
             // height: 28
             id: inputText1
@@ -131,6 +158,9 @@ ApplicationWindow{
             
             color:"#5D5D5D"
             placeholderText:"enter phrase"
+            selectByMouse: true
+            selectedTextColor: "#ffffff"
+            selectionColor: "#ff007f"
             anchors {
                 left: parent.left
                 right: parent.right
@@ -172,6 +202,7 @@ ApplicationWindow{
                 // connectId.onDirPath(inputText1.text)
                 // backend.findPhrase(inputText1.text)
                 backend.path_and_phrase(inputText.text, inputText1.text)
+                console.log(list_objects)
             }
             // onEntered: {
             //     submitText.color="grey"
@@ -192,6 +223,51 @@ ApplicationWindow{
             text: file_list
             font.pixelSize: 18
             color: "black"
+            // console.log("lalala")
+        }
+        // ListView{
+        //     id: listData
+        //     width: 500
+        //     height: 500
+        //     model: list_objects
+        //     anchors{
+        //         top: parent.top
+        //         left: parent.left
+        //         topMargin: 15
+        //         leftMargin: 15
+        //     }
+        //     Component {
+        //     id: listDelegate
+
+        //     ColumnLayout {
+        //         id: cont
+        //         width: parent.width
+        //         height: parent.height
+
+        //         Text {
+        //             text:"ppaa"
+        //             color: "black"
+        //             font.pixelSize: 18
+        //         }
+        //     }
+
+        // }
+
+        // delegate: listDelegate
+        // highlight: Rectangle { color: "dodgerblue" }
+        // focus: true
+        // }
+        Item{
+            function allObjects(){
+                for (var i = 0; i < list_objects.length; i++){
+                    // Text{
+                    //     text:list_objects[i]
+                    //     color:"black"
+                    //     font.pixelSize: 15
+                    // }
+
+            }
+        }
         }
     }
 }
